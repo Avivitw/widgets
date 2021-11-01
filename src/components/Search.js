@@ -19,9 +19,16 @@ const Search = () => {
       setResults(data.query.search);
     };
 
-    if (term) {
-      search();
-    }
+    const timeoutId = setTimeout(() => {
+      if (term) {
+        search();
+      }
+    }, 1000);
+
+    //cleanup func to cancel previous timer
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [term]);
 
   const renderedResults = results.map((result) => {
