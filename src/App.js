@@ -38,12 +38,11 @@ export default () => {
 
   return (
     <div>
-      <Search />
-      {/* <Dropdown
+      <Dropdown
         selected={selected}
         onSelectedChange={setSelected}
         options={options}
-      /> */}
+      />
     </div>
   );
 };
