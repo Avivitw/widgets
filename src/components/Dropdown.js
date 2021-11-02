@@ -1,8 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Dropdown = ({ options, selected, onSelectedChange }) => {
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    document.body.addEventListener(
+      "click",
+      () => {
+        setOpen(false);
+      },
+      { capture: true }
+    );
+    // we want to set it up just for 1 time so we need empty array
+  }, []);
   const renderedOptions = options.map((option) => {
     if (option.value === selected.value) {
       return null;
