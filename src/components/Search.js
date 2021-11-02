@@ -5,11 +5,14 @@ const Search = () => {
   const [term, setTerm] = useState("programing");
   const [debouncedTerm, setDebouncedTerm] = useState(term);
   const [results, setResults] = useState([]);
+  const [counter, setCounter] = useState(140);
 
   useEffect(() => {
     const timerId = setTimeout(() => {
       setDebouncedTerm(term);
     }, 1000);
+
+    setCounter(20 - term.length);
 
     // cleanup timer
     return () => {
@@ -28,7 +31,9 @@ const Search = () => {
           srsearch: debouncedTerm,
         },
       });
-      setResults(data.query.search);
+      if (data.query) {
+        setResults(data.query.search);
+      }
     };
     search();
   }, [debouncedTerm]);
@@ -62,6 +67,9 @@ const Search = () => {
             className="input"
             onChange={(e) => setTerm(e.target.value)}
           ></input>
+          <span style={{ color: counter <= 0 ? "red" : "green" }}>
+            {counter}
+          </span>
         </div>
       </div>
       <div className="ui celled list">{renderedResults}</div>
