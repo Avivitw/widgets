@@ -4,21 +4,32 @@ import KEY from "../apis";
 import axios from "axios";
 
 const Convert = ({ language, text }) => {
+  const [translated, setTranslated] = useState("");
+
   useEffect(() => {
-    axios.post(
-      "https://translation.googleapis.com/language/translate/v2",
-      {},
-      {
-        params: {
-          q: text,
-          target: language.value,
-          key: KEY,
-        },
-      }
-    );
+    const doTranslation = async () => {
+      const { data } = await axios.post(
+        "https://translation.googleapis.com/language/translate/v2",
+        {},
+        {
+          params: {
+            q: text,
+            target: language.value,
+            key: KEY,
+          },
+        }
+      );
+      setTranslated(data.data.translations[0].translatedText);
+    };
+
+    doTranslation();
   }, [language, text]);
 
-  return <div></div>;
+  return (
+    <div>
+      <h1 className="ui header">{translated}</h1>
+    </div>
+  );
 };
 
 export default Convert;
